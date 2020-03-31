@@ -22,6 +22,7 @@ else
     # Default script placeholders.
     DOMAIN_NAME=example.com
     EMAIL=mailbox@example.com
+    COMPOSE_PROJECT_NAME=example
 fi
 
 # If there is an argument passed to the script.
@@ -35,6 +36,8 @@ then
         read NEW_DOMAIN_NAME
         printf "Enter your e-mail address (cos of Let's Encrypt check): "
         read NEW_EMAIL
+        printf "Enter your project name (for docker-compose): "
+        read NEW_COMPOSE_PROJECT_NAME
         
         # Replace domain name in Nginx and Traefik configuration files.
         sh $NGINX_RENAME_SCRIPT $DOMAIN_NAME $NEW_DOMAIN_NAME
@@ -57,6 +60,7 @@ then
             echo HTTP_PORT=80
             echo EMAIL=$NEW_EMAIL
             echo COMPOSE_CONVERT_WINDOWS_PATHS=1
+            echo COMPOSE_PROJECT_NAME=$NEW_COMPOSE_PROJECT_NAME
         )>$DOCKER_ENV_FILE
 
         echo "[CONFIGURE]: All PRODUCTION configuration done."
